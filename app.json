@@ -1,0 +1,10 @@
+{
+  "name": "TransMovieBot",
+  "addons": ["heroku-redis:hobby-dev"],
+  "stack": "container",
+  "environments": {
+    "review": {
+      "addons": ["heroku-redis:hobby-dev"],
+    }
+  }
+}
