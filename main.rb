@@ -15,7 +15,7 @@ post '/receive' do
   data = JSON.parse(request.body.read)
   case data['type']
   when 'url_verification'
-    data
+    data.to_json
   else
     raise NotImplementedError
   end
