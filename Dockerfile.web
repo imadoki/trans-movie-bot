@@ -11,6 +11,7 @@ ENV APP_ROOT /home/runner/trans-movie-bot
 RUN mkdir -p ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 COPY --chown=runner:runner . ${APP_ROOT}/
+RUN bundle config without development:test
 RUN bundle install
 CMD ["bundle", "exec", "ruby", "main.rb"]
 EXPOSE ${PORT}
