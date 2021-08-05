@@ -9,7 +9,7 @@ def event_callback(data)
 
   raise NotImplementedError if data['event']['type'] != 'message' || data['event']['channel_type'] != 'im'
 
-  SlackClient.post_message(channel: data['event']['channel'], text: 'はろー') if data['event']['subtype'] != 'bot_message'
+  SlackClient.post_message(channel: data['event']['channel'], text: 'はろー') unless data['authorizations'][0]['is_bot']
 end
 
 configure do
