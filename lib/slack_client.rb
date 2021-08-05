@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday_middleware'
 
 class SlackClient
   def self.post_message(channel:, text:)
@@ -21,11 +22,10 @@ class SlackClient
 
   def conn
     Faraday::Connection.new(url: 'https://slack.com') do |builder|
+      builder.adapter Faraday.default_adapter
       builder.request :json
-      builder.request :url_encoded
       builder.request :authorization, :Bearer, ENV.fetch('SLACK_BOT_USER_TOKEN')
       builder.response :logger
-      builder.adapter Faraday.default_adapter
     end
   end
 end

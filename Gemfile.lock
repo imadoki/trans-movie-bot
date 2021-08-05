@@ -21,6 +21,8 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    faraday_middleware (1.1.0)
+      faraday (~> 1.0)
     minitest (5.14.4)
     multipart-post (2.1.1)
     mustermann (1.1.1)
@@ -70,6 +72,7 @@ PLATFORMS
 
 DEPENDENCIES
   faraday
+  faraday_middleware
   minitest
   puma
   rack-test
