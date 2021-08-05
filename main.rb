@@ -2,6 +2,13 @@
 
 require 'sinatra'
 require 'json'
+require './lib/slack_client'
+
+def event_callback(data)
+  raise NotImplementedError if data['event']['type'] != 'message' || data['event']['channel_type'] != 'app_home'
+
+  SlackClient.post_message(channel: data['event']['channel'], text: 'はろー')
+end
 
 configure do
   set :bind, '0.0.0.0'
@@ -18,6 +25,8 @@ post '/receive' do
   case data['type']
   when 'url_verification'
     data.to_json
+  when 'event_callback'
+    event_callback(data)
   else
     raise NotImplementedError
   end
