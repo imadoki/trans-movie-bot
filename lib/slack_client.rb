@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 class SlackClient
   def self.post_message(channel:, text:)
     new.post('/api/chat.postMessage', params(channel: channel, text: text))
