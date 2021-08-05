@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    minitest (5.14.4)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
@@ -13,6 +14,8 @@ GEM
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rainbow (3.0.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
@@ -44,7 +47,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  minitest
   puma
+  rack-test
   rubocop
   rubocop-performance
   sinatra
