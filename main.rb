@@ -5,10 +5,11 @@ require 'json'
 require './lib/slack_client'
 
 def event_callback(data)
-  raise NotImplementedError if data['event']['type'] != 'message' || data['event']['channel_type'] != 'im'
-  return [200, ''] if data['event']['subtype'] == 'bot_message'
+  puts data
 
-  SlackClient.post_message(channel: data['event']['channel'], text: 'はろー')
+  raise NotImplementedError if data['event']['type'] != 'message' || data['event']['channel_type'] != 'im'
+
+  SlackClient.post_message(channel: data['event']['channel'], text: 'はろー') if data['event']['subtype'] != 'bot_message'
 end
 
 configure do
