@@ -4,12 +4,14 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'faraday'
 gem 'puma'
 gem 'sinatra'
 
 group :development, :test do
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rack-test'
   gem 'minitest'
+  gem 'rack-test'
+  gem 'rubocop', require: false
+  gem 'rubocop-minitest', require: false
+  gem 'rubocop-performance', require: false
 end

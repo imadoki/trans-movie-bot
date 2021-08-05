@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './main'
 require 'minitest/autorun'
 require 'rack/test'
@@ -16,7 +18,7 @@ class MainTest < Minitest::Test
   end
 
   def test_receive
-    params = {type: 'url_verification'}.to_json
+    params = { type: 'url_verification' }.to_json
     post '/receive', params
     assert last_response.ok?
     assert_equal params, last_response.body
