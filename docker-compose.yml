@@ -16,6 +16,7 @@ services:
       TZ: Asia/Tokyo
       REDIS_URL: redis://redis:6379
       SLACK_BOT_USER_TOKEN: $SLACK_BOT_USER_TOKEN
+      SLACK_BOT_APP_ID: $SLACK_BOT_APP_ID
       PORT: 8080
     volumes:
       - .:/home/dev/trans-movie-bot

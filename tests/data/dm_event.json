@@ -1,0 +1,47 @@
+{
+  "token": "ffffffffffffffffffffffff",
+  "team_id": "fffffffff",
+  "api_app_id": "fffffffffff",
+  "event": {
+    "client_msg_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+    "type": "message",
+    "text": "test",
+    "user": "FFFFFFFFF",
+    "ts": "0000000000.000000",
+    "team": "FFFFFFFFF",
+    "blocks": [
+      {
+        "type": "rich_text",
+        "block_id": "FFFF",
+        "elements": [
+          {
+            "type": "rich_text_section",
+            "elements": [
+              {
+                "type": "text",
+                "text": "test"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "channel": "FFFFFFFFFFF",
+    "event_ts": "0000000000.000000",
+    "channel_type": "im"
+  },
+  "type": "event_callback",
+  "event_id": "EvXXXXXXXXXX",
+  "event_time": 0,
+  "authorizations": [
+    {
+      "enterprise_id": null,
+      "team_id": "FFFFFFFFF",
+      "user_id": "FFFFFFFFF",
+      "is_bot": false,
+      "is_enterprise_install": false
+    }
+  ],
+  "is_ext_shared_channel": false,
+  "event_context": "4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}

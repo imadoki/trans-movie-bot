@@ -12,6 +12,7 @@ gem 'sinatra'
 group :development, :test do
   gem 'minitest'
   gem 'rack-test'
+  gem 'rr', require: false
   gem 'rubocop', require: false
   gem 'rubocop-minitest', require: false
   gem 'rubocop-performance', require: false
