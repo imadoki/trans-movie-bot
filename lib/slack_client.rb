@@ -5,7 +5,7 @@ require 'faraday_middleware'
 
 class SlackClient
   def self.post_message(channel:, text:)
-    new.post('/api/chat.postMessage', params(channel: channel, text: text))
+    new.post_message('/api/chat.postMessage', params(channel: channel, text: text))
   end
 
   def self.params(channel:, text:)
@@ -16,14 +16,36 @@ class SlackClient
     }
   end
 
-  def post(...)
-    conn.post(...)
+  def self.upload_file(channel:, file:)
+    new.upload_file(channel: channel, file: file)
   end
 
-  def conn
+  def post_message(...)
+    connection_use_json.post(...)
+  end
+
+  def upload_file(channel:, file:)
+    payload = {
+      channel: channel,
+      inline_comment: 'アップロードしました',
+      file: Faraday::FilePart.new(file, 'video/mp4', 'reupload.mp4')
+    }
+    connection_use_multipart.post('/api/files.upload', payload)
+  end
+
+  def connection_use_json
     Faraday::Connection.new(url: 'https://slack.com') do |builder|
       builder.adapter Faraday.default_adapter
       builder.request :json
+      builder.request :authorization, :Bearer, ENV.fetch('SLACK_BOT_USER_TOKEN')
+      builder.response :logger
+    end
+  end
+
+  def connection_use_multipart
+    Faraday::Connection.new(url: 'https://slack.com') do |builder|
+      builder.adapter Faraday.default_adapter
+      builder.request :multipart
       builder.request :authorization, :Bearer, ENV.fetch('SLACK_BOT_USER_TOKEN')
       builder.response :logger
     end

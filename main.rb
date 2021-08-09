@@ -3,9 +3,10 @@
 require 'sinatra'
 require 'json'
 require './lib/slack_client'
+require './lib/trans_movie'
 
 # FIXME: fix rubocop warning
-# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 def event_callback(data)
   puts data
 
@@ -14,14 +15,16 @@ def event_callback(data)
   return if data.dig('event', 'bot_profile', 'app_id') == ENV.fetch('SLACK_BOT_APP_ID')
 
   if data.dig('event', 'files') && data.dig('event', 'subtype') == 'file_share'
-    SlackClient.post_message(channel: data['event']['channel'],
-                             text: data.dig('event', 'files', 0, 'title'))
+    TransMovie.download(url: data.dig('event', 'files', 0, 'url_private_download')) do |file|
+      SlackClient.upload_file(channel: data['event']['channel'], file: file)
+    end
+    nil
   else
     SlackClient.post_message(channel: data['event']['channel'],
                              text: 'はろー')
   end
 end
-# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
 configure do
   set :bind, '0.0.0.0'
