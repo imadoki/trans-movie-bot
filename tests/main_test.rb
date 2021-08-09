@@ -41,6 +41,14 @@ class MainTest < Minitest::Test
     assert_received(SlackClient) { |klass| klass.post_message(channel: anything, text: anything).never }
   end
 
+  def test_event_callback_when_dm_attached_file
+    data = json_data('./tests/data/dm_event_attached_file.json')
+    stub(SlackClient).post_message
+    result = event_callback(data)
+    assert_nil result
+    assert_received(SlackClient) { |klass| klass.post_message(channel: anything, text: 'test.mp4').once }
+  end
+
   def json_data(file_path)
     File.open(file_path) do |f|
       JSON.parse(f.read)

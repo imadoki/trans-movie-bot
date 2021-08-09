@@ -4,6 +4,8 @@ require 'sinatra'
 require 'json'
 require './lib/slack_client'
 
+# FIXME: fix rubocop warning
+# rubocop:disable Metrics/AbcSize
 def event_callback(data)
   puts data
 
@@ -11,9 +13,15 @@ def event_callback(data)
 
   return if data.dig('event', 'bot_profile', 'app_id') == ENV.fetch('SLACK_BOT_APP_ID')
 
-  SlackClient.post_message(channel: data['event']['channel'],
-                           text: 'はろー')
+  if data.dig('event', 'files') && data.dig('event', 'subtype') == 'file_share'
+    SlackClient.post_message(channel: data['event']['channel'],
+                             text: data.dig('event', 'files', 0, 'title'))
+  else
+    SlackClient.post_message(channel: data['event']['channel'],
+                             text: 'はろー')
+  end
 end
+# rubocop:enable Metrics/AbcSize
 
 configure do
   set :bind, '0.0.0.0'
