@@ -21,7 +21,7 @@ class Main < Sinatra::Base
     when 'url_verification'
       data.to_json
     when 'event_callback'
-      EventCallback.run(uata)
+      EventCallback.run(data)
     else
       raise NotImplementedError
     end
