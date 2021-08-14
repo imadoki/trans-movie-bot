@@ -1,0 +1,16 @@
+FROM ruby:3
+
+# add node
+ENV TZ='Asia/Tokyo'
+ENV MALLOC_ARENA_MAX=2
+
+RUN groupadd --gid 1000 runner \
+  && useradd --uid 1000 --gid runner --shell /bin/bash --create-home runner
+USER runner
+ENV APP_ROOT /home/runner/trans-movie-bot
+RUN mkdir -p ${APP_ROOT}
+WORKDIR ${APP_ROOT}
+COPY --chown=runner:runner . ${APP_ROOT}/
+RUN bundle config without development:test
+RUN bundle install
+CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml", "-r", "./lib/worker.rb"]
