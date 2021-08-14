@@ -12,6 +12,8 @@ class TransMovie
     response = conn.get(url)
     Tempfile.create(binmode: true) do |f|
       f.write(response.body)
+      # NOTE: 書き込んだ内容を読めるようにrewindする
+      f.rewind
       yield f
     end
   end

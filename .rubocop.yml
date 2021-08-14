@@ -6,5 +6,9 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
 
+# 日本語のコメントを書きたい
+Style/AsciiComments:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
