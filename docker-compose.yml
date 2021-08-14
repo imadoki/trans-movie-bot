@@ -7,7 +7,7 @@ services:
       args:
         GID: ${GID:-1000}
         UID: ${UID:-1000}
-    command: ["bundle", "exec", "ruby", "./main.rb"]
+    command: ["bundle", "exec", "puma", "-C", "config/puma.rb"]
     ports:
       - 8080:8080
     depends_on:
@@ -18,11 +18,31 @@ services:
       SLACK_BOT_USER_TOKEN: $SLACK_BOT_USER_TOKEN
       SLACK_BOT_APP_ID: $SLACK_BOT_APP_ID
       PORT: 8080
+      SIDEKIQ_SESSION_SECRET: ${SIDEKIQ_SESSION_SECRET}
     volumes:
       - .:/home/dev/trans-movie-bot
     init: true
     stdin_open: true
     tty: true
+  worker:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        GID: ${GID:-1000}
+        UID: ${UID:-1000}
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml", "-r", "./lib/worker.rb"]
+    depends_on:
+      - redis
+    environment:
+      TZ: Asia/Tokyo
+      REDIS_URL: redis://redis:6379
+      SLACK_BOT_USER_TOKEN: $SLACK_BOT_USER_TOKEN
+      SLACK_BOT_APP_ID: $SLACK_BOT_APP_ID
+      MALLOC_ARENA_MAX: 2
+    volumes:
+      - .:/home/dev/trans-movie-bot
+    init: true
   redis:
     image: redis:6
     ports:

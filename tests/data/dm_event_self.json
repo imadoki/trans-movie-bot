@@ -6,7 +6,7 @@
     "bot_id": "XXXXXXXXXXX",
     "type": "message",
     "text": "はろー",
-    "user": "FFFFFFFFF",
+    "user": "bot_user_id",
     "ts": "0000000000.000000",
     "team": "FFFFFFFFF",
     "bot_profile": {

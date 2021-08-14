@@ -13,5 +13,5 @@ WORKDIR ${APP_ROOT}
 COPY --chown=runner:runner . ${APP_ROOT}/
 RUN bundle config without development:test
 RUN bundle install
-CMD ["bundle", "exec", "ruby", "main.rb"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 EXPOSE ${PORT}
