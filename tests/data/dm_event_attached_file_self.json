@@ -1,0 +1,62 @@
+{
+  "token": "ffffffffffffffffffffffff",
+  "team_id": "fffffffff",
+  "api_app_id": "fffffffffff",
+  "event": {
+    "type": "message",
+    "text": "",
+    "files": [
+      {
+        "id": "FFFFFFFFFFF",
+        "created": 0,
+        "timestamp": 0,
+        "name": "test.mp4",
+        "title": "test.mp4",
+        "mimetype": "video/mp4",
+        "filetype": "mp4",
+        "pretty_type": "MPEG 4 Video",
+        "user_id": "bot_user_id",
+        "editable": false,
+        "size": 1431269,
+        "mode": "hosted",
+        "is_external": false,
+        "external_type": "",
+        "is_public": false,
+        "public_url_shared": false,
+        "display_as_bot": false,
+        "username": "",
+        "url_private": "https://files.example.com/files-pri/test/test.mp4",
+        "url_private_download": "https://files.example.com/files-pri/test/download/test.mp4",
+        "media_display_type": "video",
+        "thumb_video": "https://files.example.com/files-tmb/test/test_thumb_video.jpeg",
+        "thumb_video_w": 512,
+        "thumb_video_h": 1098,
+        "permalink": "https://channel.example.com/files/bot_user_id/FFFFFFFFFFF/test.mp4",
+        "permalink_public": "https://example.com/fffffffff-FFFFFFFFFFF-xxxxxxxxxx",
+        "has_rich_preview": false
+      }
+    ],
+    "upload": false,
+    "user": "bot_user_id",
+    "display_as_bot": false,
+    "ts": "0.0",
+    "channel": "FFFFFFFFFFF",
+    "subtype": "file_share",
+    "event_ts": "0.0",
+    "channel_type": "im"
+  },
+  "type": "event_callback",
+  "event_id": "EvXXXXXXXXXX",
+  "event_time": 0,
+  "authorizations": [
+    {
+      "enterprise_id": null,
+      "team_id": "fffffffff",
+      "user_id": "FFFFFFFFF",
+      "is_bot": false,
+      "is_enterprise_install": false
+    }
+  ],
+  "is_ext_shared_channel": false,
+  "event_context": "4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}

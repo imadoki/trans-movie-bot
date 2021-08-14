@@ -28,17 +28,21 @@ class MainTest < Minitest::Test
   def test_event_callback_when_dm_user
     data = json_data('./tests/data/dm_event.json')
     stub(SlackClient).post_message
+    stub(SlackClient).auth_test { { 'ok' => true, 'user_id' => 'bot_user_id' } }
     result = event_callback(data)
     assert_nil result
     assert_received(SlackClient) { |klass| klass.post_message(channel: anything, text: anything).once }
+    assert_received(SlackClient) { |klass| klass.auth_test.once }
   end
 
   def test_event_callback_when_dm_self
     data = json_data('./tests/data/dm_event_self.json')
     stub(SlackClient).post_message
+    stub(SlackClient).auth_test { { 'ok' => true, 'user_id' => 'bot_user_id' } }
     result = event_callback(data)
     assert_nil result
     assert_received(SlackClient) { |klass| klass.post_message(channel: anything, text: anything).never }
+    assert_received(SlackClient) { |klass| klass.auth_test.once }
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -56,11 +60,23 @@ class MainTest < Minitest::Test
         end
       end
     end
+    stub(SlackClient).auth_test { { 'ok' => true, 'user_id' => 'bot_user_id' } }
     result = event_callback(data)
     assert_nil result
     assert_received(SlackClient) { |klass| klass.upload_file(channels: is_a(Array), file: anything).once }
+    assert_received(SlackClient) { |klass| klass.auth_test.once }
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+  def test_event_callback_when_dm_attached_file_self
+    data = json_data('./tests/data/dm_event_attached_file_self.json')
+    stub(TransMovie).download
+    stub(SlackClient).auth_test { { 'ok' => true, 'user_id' => 'bot_user_id' } }
+    result = event_callback(data)
+    assert_nil result
+    assert_received(TransMovie) { |klass| klass.download(url: anything).never }
+    assert_received(SlackClient) { |klass| klass.auth_test.once }
+  end
 
   def json_data(file_path)
     File.open(file_path) do |f|

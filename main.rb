@@ -10,9 +10,14 @@ require './lib/trans_movie'
 def event_callback(data)
   puts data
 
+  res = SlackClient.auth_test
+  raise 'bot infomation is not found.' unless res['ok']
+
+  bot_user_id = res['user_id']
+
   raise NotImplementedError if data['event']['type'] != 'message' || data['event']['channel_type'] != 'im'
 
-  return if data.dig('event', 'bot_profile', 'app_id') == ENV.fetch('SLACK_BOT_APP_ID')
+  return if data.dig('event', 'user') == bot_user_id
 
   if data.dig('event', 'files') && data.dig('event', 'subtype') == 'file_share'
     TransMovie.download(url: data.dig('event', 'files', 0, 'url_private_download')) do |file|

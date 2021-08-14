@@ -20,6 +20,10 @@ class SlackClient
     new.upload_file(channels: channels, file: file)
   end
 
+  def self.auth_test
+    new.auth_test
+  end
+
   def post_message(...)
     connection_use_json.post(...)
   end
@@ -33,12 +37,17 @@ class SlackClient
     connection_use_multipart.post('/api/files.upload', payload)
   end
 
+  def auth_test
+    connection_use_json.post('/api/auth.test').body
+  end
+
   def connection_use_json
     Faraday::Connection.new(url: 'https://slack.com') do |builder|
       builder.adapter Faraday.default_adapter
       builder.request :json
       builder.request :authorization, :Bearer, ENV.fetch('SLACK_BOT_USER_TOKEN')
       builder.response :logger
+      builder.response :json, content_type: /\bjson$/
     end
   end
 
