@@ -58,7 +58,7 @@ class MainTest < Minitest::Test
     end
     result = event_callback(data)
     assert_nil result
-    assert_received(SlackClient) { |klass| klass.upload_file(channel: anything, file: anything).once }
+    assert_received(SlackClient) { |klass| klass.upload_file(channels: is_a(Array), file: anything).once }
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 

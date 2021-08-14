@@ -16,17 +16,17 @@ class SlackClient
     }
   end
 
-  def self.upload_file(channel:, file:)
-    new.upload_file(channel: channel, file: file)
+  def self.upload_file(channels:, file:)
+    new.upload_file(channels: channels, file: file)
   end
 
   def post_message(...)
     connection_use_json.post(...)
   end
 
-  def upload_file(channel:, file:)
+  def upload_file(channels:, file:)
     payload = {
-      channel: channel,
+      channels: channels.join(','),
       inline_comment: 'アップロードしました',
       file: Faraday::FilePart.new(file, 'video/mp4', 'reupload.mp4')
     }

@@ -16,7 +16,7 @@ def event_callback(data)
 
   if data.dig('event', 'files') && data.dig('event', 'subtype') == 'file_share'
     TransMovie.download(url: data.dig('event', 'files', 0, 'url_private_download')) do |file|
-      SlackClient.upload_file(channel: data['event']['channel'], file: file)
+      SlackClient.upload_file(channels: [data['event']['channel']], file: file)
     end
     nil
   else
