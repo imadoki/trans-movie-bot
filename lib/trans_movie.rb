@@ -20,7 +20,7 @@ class TransMovie
 
   def download(url:)
     response = conn.get(url)
-    Tempfile.create(binmode: true) do |f|
+    ::Tempfile.create(binmode: true) do |f|
       f.write(response.body)
       # NOTE: 書き込んだ内容を読めるようにrewindする
       f.rewind
