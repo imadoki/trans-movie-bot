@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/slack_client'
-require './lib/trans_movie'
-require './lib/workers/test_worker'
+require './lib/workers/trans_mp4_worker'
 
 module EventCallback
   # FIXME: fix rubocop warning
@@ -19,11 +18,11 @@ module EventCallback
 
     return if data.dig('event', 'user') == bot_user_id
 
-    TestWorker.perform_async(data['event']['channel'])
     if data.dig('event', 'files') && data.dig('event', 'subtype') == 'file_share'
-      TransMovie.download(url: data.dig('event', 'files', 0, 'url_private_download')) do |file|
-        SlackClient.upload_file(channels: [data['event']['channel']], file: file)
-      end
+      channel = data['event']['channel']
+      url = data.dig('event', 'files', 0, 'url_private_download')
+      TransMp4Worker.perform_async(channel, url)
+      SlackClient.post_message(channel: channel, text: 'enqueue')
       nil
     else
       SlackClient.post_message(channel: data['event']['channel'],

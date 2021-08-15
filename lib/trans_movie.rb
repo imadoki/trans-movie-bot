@@ -8,6 +8,16 @@ class TransMovie
     new.download(url: url, &block)
   end
 
+  def self.trans_mp4(url:, &block)
+    new.download(url: url) do |target|
+      system("ffmpeg -y -i #{target.path} -acodec copy -map 0:0 result.mp4")
+      raise 'not found result.mp4' unless File.exist?('result.mp4')
+
+      File.open('result.mp4', &block)
+      system('rm -rf result.mp4')
+    end
+  end
+
   def download(url:)
     response = conn.get(url)
     Tempfile.create(binmode: true) do |f|
