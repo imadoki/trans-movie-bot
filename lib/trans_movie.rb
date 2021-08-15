@@ -2,6 +2,7 @@
 
 require 'faraday'
 require 'faraday_middleware'
+require 'tempfile'
 
 class TransMovie
   def self.download(url:, &block)
@@ -20,7 +21,7 @@ class TransMovie
 
   def download(url:)
     response = conn.get(url)
-    ::Tempfile.create(binmode: true) do |f|
+    Tempfile.create(binmode: true) do |f|
       f.write(response.body)
       # NOTE: 書き込んだ内容を読めるようにrewindする
       f.rewind
