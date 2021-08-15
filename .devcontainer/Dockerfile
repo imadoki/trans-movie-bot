@@ -1,5 +1,9 @@
 FROM ruby:3
 
+RUN apt-get update -qq && \
+  apt-get install -y --no-install-recommends ffmpeg && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 ARG GID="1000"
 ARG UID="1000"
 RUN groupadd --gid ${GID} dev \

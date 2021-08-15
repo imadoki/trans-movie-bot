@@ -4,6 +4,10 @@ FROM ruby:3
 ENV TZ='Asia/Tokyo'
 ENV MALLOC_ARENA_MAX=2
 
+RUN apt-get update -qq && \
+  apt-get install -y --no-install-recommends ffmpeg && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 RUN groupadd --gid 1000 runner \
   && useradd --uid 1000 --gid runner --shell /bin/bash --create-home runner
 USER runner
